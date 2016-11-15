@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{84168E0A-A22E-86A8-88E0-3F36CF42DAA3}") = "NarrativePlayUnity", "Assembly-CSharp.csproj", "{784C59A4-12B1-392E-4F2B-5EFD2FF23151}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{784C59A4-12B1-392E-4F2B-5EFD2FF23151}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{784C59A4-12B1-392E-4F2B-5EFD2FF23151}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{784C59A4-12B1-392E-4F2B-5EFD2FF23151}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{784C59A4-12B1-392E-4F2B-5EFD2FF23151}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

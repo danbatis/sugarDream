@@ -6,29 +6,36 @@ public class GUImanager : MonoBehaviour {
 	RawImage backgroundImage;
 	RawImage storyImage;
 	Text chapterText;
+	public string nextScene;
 
 	public float fadeTime = 0.5f;
 	public int frameTextIndex=0;
 
 	public string[] frameTexts;
 	public Texture[] storyImages;
-	public int[] storyImageChapters;
-
+	public int[] storyImageLines;
 	private int storyImageIndex=0;
+
+	public AudioClip[] sounds;
+	public int[] soundLines;
+	private int soundLineIndex=0;
+
 
 	private float fadeStart;
 	private bool fadein;
 	private bool fadeout;
+	private AudioSource myAudio;
 
 	// Use this for initialization
 	void Start () {
 		chapterText = GetComponentInChildren<Text> ();
 		backgroundImage = GameObject.Find(gameObject.name+"/BlackLayer4fade").GetComponent<RawImage> ();
 		storyImage = GameObject.Find(gameObject.name+"/storyImage").GetComponent<RawImage> ();
+		myAudio = GetComponent<AudioSource> ();
 		backgroundImage.CrossFadeAlpha (1f,0f,true);
 		chapterText.text = frameTexts [frameTextIndex];
 
-		if (storyImages.Length == storyImageChapters.Length) {
+		if (storyImages.Length == storyImageLines.Length) {
 			if (frameTextIndex == 0) {
 				Debug.Log ("game started from scratch...");
 			}
@@ -38,7 +45,7 @@ public class GUImanager : MonoBehaviour {
 			InitStory ();
 		}
 		else{
-			Debug.Log ("The arrays storyImages and storyImageChapters shall have the same length, because one is the specification for what chapter each image is.");
+			Debug.Log ("The arrays storyImages and storyImageLines shall have the same length, because one is the specification for what chapter each image is.");
 			Application.Quit ();
 			Time.timeScale = 0;
 		}
@@ -71,8 +78,8 @@ public class GUImanager : MonoBehaviour {
 	void InitStory(){
 		//prepare story image
 		int targetFrameText = frameTextIndex+1;
-		for (int i = 0; i < storyImageChapters.Length; i++) {
-			if (storyImageChapters [i] >= targetFrameText) {
+		for (int i = 0; i < storyImageLines.Length; i++) {
+			if (storyImageLines [i] >= targetFrameText) {
 				storyImageIndex = i;
 				break;
 			}
@@ -80,7 +87,7 @@ public class GUImanager : MonoBehaviour {
 		//hide storyImage
 		storyImage.enabled = false;
 		backgroundImage.CrossFadeAlpha (1f,0f,true);
-		nextFrame ();
+		nextFrame();
 		fadein = true;
 		backgroundImage.CrossFadeAlpha (0f,2*fadeTime,false);
 		fadeStart = Time.time;
@@ -88,10 +95,15 @@ public class GUImanager : MonoBehaviour {
 	void nextFrame(){
 		//check if there is a story image
 		if (storyImageIndex >= 0) {
-			if (storyImageChapters [storyImageIndex] == frameTextIndex)
+			if (storyImageLines [storyImageIndex] == frameTextIndex)
 				nextImage ();
 			else
 				nextText ();
+
+			if (soundLines [soundLineIndex] == frameTextIndex) {
+				myAudio.PlayOneShot (sounds[soundLineIndex]);
+				soundLineIndex += 1;
+			}
 		} 
 		else{
 			nextText ();				
@@ -102,6 +114,8 @@ public class GUImanager : MonoBehaviour {
 		frameTextIndex += 1;
 		if (frameTextIndex >= frameTexts.Length) {
 			Debug.Log ("ok, reached the end, for now let us go back to the first chapter");
+			if (nextScene != "")
+				Application.LoadLevel (nextScene);
 			frameTextIndex = 0;
 		}
 		chapterText.text = frameTexts [frameTextIndex];		

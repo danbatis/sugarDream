@@ -4,15 +4,15 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class TestGUI : MonoBehaviour {
-	public RawImage handButtonImg;
-	public Selectable handButton;
-	public EventSystem eventListener;
+	public string level2Load;
 
 	// Use this for initialization
 	void Start () {
+		/*
 		handButtonImg = GameObject.Find(gameObject.name+"/handButton").GetComponent<RawImage> ();
 		handButton = GameObject.Find(gameObject.name+"/handButton").GetComponent<Selectable> ();
 		eventListener = GameObject.Find(gameObject.name+"/EventSystem").GetComponent<EventSystem> ();
+		*/
 	}
 	
 	// Update is called once per frame
@@ -21,5 +21,10 @@ public class TestGUI : MonoBehaviour {
 		if (handButton.OnSelect(eventListener))
 			Debug.Log ("handButton Selected!");
 		*/
+
+	}
+	public void imageClicked(){
+		Debug.Log ("Clicked on me:"+gameObject.name);
+		Application.LoadLevel (level2Load);
 	}
 }
